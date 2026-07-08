@@ -48,6 +48,12 @@ function wordCells(w) {
 
 const storeKey = `crossword-state-${dateKey}`
 
+// Tab 순환 순서: 열쇠 목록 표시 순서와 동일하게 가로 먼저, 세로 다음
+const wordOrder = [
+  ...puzzle.words.map((w, wi) => (w.dir === 'across' ? wi : -1)),
+  ...puzzle.words.map((w, wi) => (w.dir === 'down' ? wi : -1)),
+].filter((wi) => wi >= 0)
+
 export default function App() {
   const { cells, wordNums } = useMemo(() => buildGrid(puzzle), [])
   const saved = useMemo(() => JSON.parse(localStorage.getItem(storeKey) || 'null'), [])
@@ -61,7 +67,15 @@ export default function App() {
     const s = JSON.parse(localStorage.getItem('crossword-streak') || 'null')
     return saved?.done && s?.last === dateKey ? s.count : 0
   })
+  const [theme, setTheme] = useState(
+    () => localStorage.getItem('crossword-theme') ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
+  )
   const inputs = useRef({})
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    localStorage.setItem('crossword-theme', theme)
+  }, [theme])
 
   useEffect(() => {
     localStorage.setItem(storeKey, JSON.stringify({ entries, attempts, done }))
@@ -124,6 +138,12 @@ export default function App() {
       const [dr, dc] = moves[e.key]
       const next = `${cell.r + dr},${cell.c + dc}`
       if (cells.has(next)) focusCell(next)
+    } else if (e.key === 'Tab') {
+      e.preventDefault() // 다음/이전 열쇠 단어로 점프 (열쇠 하이라이트도 함께 이동)
+      const pos = wordOrder.indexOf(activeWi)
+      const next = wordOrder[(pos + (e.shiftKey ? -1 : 1) + wordOrder.length) % wordOrder.length]
+      setActiveWi(next)
+      focusCell(`${puzzle.words[next].row},${puzzle.words[next].col}`)
     } else if (e.key === 'Enter') {
       e.preventDefault()
       step(key, 1) // 진행 방향(가로/세로)의 다음 칸으로
@@ -185,6 +205,13 @@ export default function App() {
   return (
     <div className="app">
       <header>
+        <button
+          className="theme-btn"
+          onClick={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
+          aria-label="다크모드 전환"
+        >
+          {theme === 'dark' ? '☀️' : '🌙'}
+        </button>
         <h1>매일 낱말퀴즈</h1>
         <p className="date">
           {dateKey}

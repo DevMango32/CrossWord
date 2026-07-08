@@ -19,8 +19,25 @@
 }
 
 header {
+  position: relative;
   text-align: center;
   margin-bottom: 16px;
+}
+
+.theme-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 1.2rem;
+  background: none;
+  border: 1px solid var(--muted);
+  border-radius: 8px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.theme-btn:hover {
+  background: var(--hover);
 }
 
 h1 {
