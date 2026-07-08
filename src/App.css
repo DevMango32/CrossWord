@@ -1,0 +1,145 @@
+.app {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+h1 {
+  font-size: 1.6rem;
+  margin: 0;
+}
+
+.date {
+  color: #777;
+  font-size: 0.9rem;
+  margin: 4px 0 0;
+}
+
+.board {
+  display: grid;
+  gap: 3px;
+  background: #333;
+  border: 3px solid #333;
+  border-radius: 6px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.cell {
+  position: relative;
+  aspect-ratio: 1;
+  background: #fff;
+}
+
+.cell.black {
+  background: #333;
+}
+
+.cell.hl {
+  background: #fff3bf;
+}
+
+.cell.ok input {
+  color: #2b8a3e;
+}
+
+.cell.bad {
+  background: #ffe3e3;
+}
+
+.cell .num {
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  font-size: 0.65rem;
+  color: #888;
+  pointer-events: none;
+}
+
+.cell input {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  text-align: center;
+  font-size: clamp(1rem, 5vw, 1.5rem);
+  font-weight: 700;
+  color: #222;
+  padding: 0;
+}
+
+.cell input:focus {
+  outline: 3px solid #4dabf7;
+  outline-offset: -3px;
+}
+
+.panel {
+  text-align: center;
+  margin: 16px 0;
+}
+
+.panel button {
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 10px 24px;
+  border: 0;
+  border-radius: 8px;
+  background: #364fc7;
+  color: #fff;
+  cursor: pointer;
+}
+
+.panel button:hover {
+  background: #2c3fa3;
+}
+
+.hint {
+  color: #777;
+  font-size: 0.9rem;
+  margin: 8px 0 0;
+}
+
+.clue-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 480px) {
+  .clue-cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+.clues h2 {
+  font-size: 1rem;
+  border-bottom: 2px solid #333;
+  padding-bottom: 4px;
+}
+
+.clues ol {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+}
+
+.clues li {
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.clues li:hover {
+  background: #f1f3f5;
+}
+
+.clues li.active {
+  background: #fff3bf;
+}

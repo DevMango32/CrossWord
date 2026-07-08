@@ -1,0 +1,36 @@
+{
+  "2026-07-08": {
+    "size": 5,
+    "words": [
+      { "dir": "across", "row": 0, "col": 0, "answer": "사과나무", "clue": "빨간 열매가 열리는 나무" },
+      { "dir": "down",   "row": 0, "col": 0, "answer": "사다리",   "clue": "높은 곳에 오를 때 쓰는 기구" },
+      { "dir": "down",   "row": 0, "col": 3, "answer": "무료",     "clue": "값을 내지 않아도 되는 것, 공짜" },
+      { "dir": "across", "row": 2, "col": 0, "answer": "리어카",   "clue": "사람이 끌고 다니는 두 바퀴 손수레" },
+      { "dir": "down",   "row": 2, "col": 2, "answer": "카메라",   "clue": "사진을 찍는 기계" },
+      { "dir": "across", "row": 4, "col": 2, "answer": "라디오",   "clue": "소리로만 방송을 듣는 기계" }
+    ]
+  },
+  "2026-07-09": {
+    "size": 5,
+    "words": [
+      { "dir": "across", "row": 0, "col": 0, "answer": "호랑이",   "clue": "줄무늬가 있는 큰 고양잇과 동물" },
+      { "dir": "down",   "row": 0, "col": 0, "answer": "호수",     "clue": "땅으로 둘러싸인 넓고 큰 물" },
+      { "dir": "down",   "row": 0, "col": 2, "answer": "이야기",   "clue": "남에게 들려주는 말이나 줄거리" },
+      { "dir": "across", "row": 2, "col": 2, "answer": "기러기",   "clue": "가을에 줄지어 날아오는 철새" },
+      { "dir": "down",   "row": 2, "col": 3, "answer": "러시아",   "clue": "세계에서 영토가 가장 넓은 나라" },
+      { "dir": "down",   "row": 2, "col": 4, "answer": "기차",     "clue": "철길 위를 달리는 긴 교통수단" },
+      { "dir": "across", "row": 3, "col": 3, "answer": "시차",     "clue": "두 지역 사이의 시간 차이" }
+    ]
+  },
+  "2026-07-10": {
+    "size": 5,
+    "words": [
+      { "dir": "across", "row": 0, "col": 0, "answer": "무지개",   "clue": "비 온 뒤 하늘에 뜨는 일곱 빛깔" },
+      { "dir": "down",   "row": 0, "col": 1, "answer": "지우개",   "clue": "연필 글씨를 지우는 도구" },
+      { "dir": "across", "row": 2, "col": 1, "answer": "개미",     "clue": "부지런함의 상징인 작은 곤충" },
+      { "dir": "down",   "row": 2, "col": 2, "answer": "미역",     "clue": "생일에 먹는 국에 들어가는 바닷말" },
+      { "dir": "across", "row": 3, "col": 2, "answer": "역사",     "clue": "지나온 시대의 기록" },
+      { "dir": "down",   "row": 3, "col": 3, "answer": "사자",     "clue": "동물의 왕이라 불리는 맹수" }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+:root {
+  font-family: system-ui, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  line-height: 1.5;
+  color: #222;
+  background-color: #f7f7f5;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
