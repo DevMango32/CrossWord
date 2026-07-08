@@ -192,6 +192,8 @@ export default function App() {
         </p>
       </header>
 
+      <div className="layout">
+        <div className="left">
       <div className="board" style={{ gridTemplateColumns: `repeat(${puzzle.size}, 1fr)` }}>
         {Array.from({ length: puzzle.size * puzzle.size }, (_, i) => {
           const key = `${Math.floor(i / puzzle.size)},${i % puzzle.size}`
@@ -237,10 +239,12 @@ export default function App() {
           {result && <p className="hint">빨간 칸이 틀린 곳이에요. ({attempts}번 확인)</p>}
         </div>
       )}
+        </div>
 
-      <div className="clue-cols">
-        {clueList('across', '가로 열쇠')}
-        {clueList('down', '세로 열쇠')}
+        <aside className="clue-cols">
+          {clueList('across', '가로 열쇠')}
+          {clueList('down', '세로 열쇠')}
+        </aside>
       </div>
     </div>
   )
