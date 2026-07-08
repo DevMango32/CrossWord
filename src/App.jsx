@@ -124,6 +124,9 @@ export default function App() {
       const [dr, dc] = moves[e.key]
       const next = `${cell.r + dr},${cell.c + dc}`
       if (cells.has(next)) focusCell(next)
+    } else if (e.key === 'Enter') {
+      e.preventDefault()
+      step(key, 1) // 진행 방향(가로/세로)의 다음 칸으로
     } else if (e.key === 'Backspace' && !entries[key]) {
       e.preventDefault()
       step(key, -1)
