@@ -97,23 +97,26 @@ export default function App() {
     else setActiveWi(ws.across ?? ws.down)
   }
 
+  // input은 uncontrolled — controlled로 하면 React가 조합(IME) 중인 입력창을
+  // 이전 값으로 되돌려서 한글 입력이 끊긴다. DOM 값은 여기서 직접 정리한다.
   const onInput = (key, e) => {
     if (e.nativeEvent?.isComposing) return // 한글 조합 중에는 건드리지 않음
     const ch = [...e.target.value.trim()].pop() ?? ''
+    e.target.value = ch
     setCell(key, ch)
     if (ch) step(key, 1)
   }
 
-  // ponytail: Windows IME는 음절 단위로 조합이 끝나므로 여기서 확정+다음 칸 이동.
-  // 아주 빠른 연속 타이핑은 드물게 글자가 샐 수 있음 — 문제되면 숨김 input 방식으로 교체
+  // Windows IME는 음절 단위로 조합이 끝나므로 여기서 확정하고 다음 칸으로 이동
   const onCompose = (key, e) => {
     const ch = [...e.data.trim()].pop() ?? ''
-    if (!ch) return
+    e.target.value = ch
     setCell(key, ch)
-    step(key, 1)
+    if (ch) step(key, 1)
   }
 
   const onKeyDown = (key, e) => {
+    if (e.nativeEvent?.isComposing) return // 조합 중 백스페이스는 IME에 맡김
     const cell = cells.get(key)
     const moves = { ArrowLeft: [0, -1], ArrowRight: [0, 1], ArrowUp: [-1, 0], ArrowDown: [1, 0] }
     if (moves[e.key]) {
@@ -204,7 +207,7 @@ export default function App() {
               {cell.num && <span className="num">{cell.num}</span>}
               <input
                 ref={(el) => (inputs.current[key] = el)}
-                value={entries[key] ?? ''}
+                defaultValue={entries[key] ?? ''}
                 disabled={done}
                 onChange={(e) => onInput(key, e)}
                 onCompositionEnd={(e) => onCompose(key, e)}

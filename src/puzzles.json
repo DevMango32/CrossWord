@@ -1,36 +1,55 @@
 {
   "2026-07-08": {
-    "size": 5,
+    "size": 7,
     "words": [
-      { "dir": "across", "row": 0, "col": 0, "answer": "사과나무", "clue": "빨간 열매가 열리는 나무" },
-      { "dir": "down",   "row": 0, "col": 0, "answer": "사다리",   "clue": "높은 곳에 오를 때 쓰는 기구" },
-      { "dir": "down",   "row": 0, "col": 3, "answer": "무료",     "clue": "값을 내지 않아도 되는 것, 공짜" },
-      { "dir": "across", "row": 2, "col": 0, "answer": "리어카",   "clue": "사람이 끌고 다니는 두 바퀴 손수레" },
-      { "dir": "down",   "row": 2, "col": 2, "answer": "카메라",   "clue": "사진을 찍는 기계" },
-      { "dir": "across", "row": 4, "col": 2, "answer": "라디오",   "clue": "소리로만 방송을 듣는 기계" }
+      { "dir": "across", "row": 0, "col": 0, "answer": "대한민국", "clue": "우리나라의 정식 이름" },
+      { "dir": "down",   "row": 0, "col": 0, "answer": "대나무",   "clue": "곧게 자라고 마디가 있는, 판다가 먹는 나무" },
+      { "dir": "down",   "row": 0, "col": 3, "answer": "국수",     "clue": "잔치 때 먹는 길고 가는 면 요리" },
+      { "dir": "across", "row": 0, "col": 5, "answer": "바다",     "clue": "지구 표면의 짠물로 된 넓은 곳" },
+      { "dir": "down",   "row": 0, "col": 6, "answer": "다리미",   "clue": "옷의 주름을 펴는 도구" },
+      { "dir": "across", "row": 2, "col": 0, "answer": "무궁화",   "clue": "대한민국의 나라꽃" },
+      { "dir": "down",   "row": 2, "col": 2, "answer": "화장품",   "clue": "얼굴을 꾸밀 때 바르는 것" },
+      { "dir": "across", "row": 2, "col": 5, "answer": "장미",     "clue": "가시가 있는 붉은 꽃의 대명사" },
+      { "dir": "down",   "row": 4, "col": 0, "answer": "아버지",   "clue": "나를 낳아 주신 남자 어버이" },
+      { "dir": "across", "row": 4, "col": 2, "answer": "품질",     "clue": "물건의 좋고 나쁨의 정도" },
+      { "dir": "down",   "row": 4, "col": 3, "answer": "질문",     "clue": "모르는 것을 묻는 일" },
+      { "dir": "across", "row": 5, "col": 3, "answer": "문어",     "clue": "다리가 여덟 개인 바다 동물" },
+      { "dir": "down",   "row": 5, "col": 4, "answer": "어른",     "clue": "다 자란 사람" },
+      { "dir": "across", "row": 6, "col": 0, "answer": "지하철",   "clue": "땅 밑으로 다니는 도시 철도" }
     ]
   },
   "2026-07-09": {
-    "size": 5,
+    "size": 7,
     "words": [
-      { "dir": "across", "row": 0, "col": 0, "answer": "호랑이",   "clue": "줄무늬가 있는 큰 고양잇과 동물" },
-      { "dir": "down",   "row": 0, "col": 0, "answer": "호수",     "clue": "땅으로 둘러싸인 넓고 큰 물" },
-      { "dir": "down",   "row": 0, "col": 2, "answer": "이야기",   "clue": "남에게 들려주는 말이나 줄거리" },
-      { "dir": "across", "row": 2, "col": 2, "answer": "기러기",   "clue": "가을에 줄지어 날아오는 철새" },
-      { "dir": "down",   "row": 2, "col": 3, "answer": "러시아",   "clue": "세계에서 영토가 가장 넓은 나라" },
-      { "dir": "down",   "row": 2, "col": 4, "answer": "기차",     "clue": "철길 위를 달리는 긴 교통수단" },
-      { "dir": "across", "row": 3, "col": 3, "answer": "시차",     "clue": "두 지역 사이의 시간 차이" }
+      { "dir": "across", "row": 0, "col": 0, "answer": "텔레비전", "clue": "영상을 보여 주는 가전제품, 티비" },
+      { "dir": "down",   "row": 0, "col": 3, "answer": "전화기",   "clue": "멀리 있는 사람과 통화하는 기계" },
+      { "dir": "down",   "row": 0, "col": 5, "answer": "사과",     "clue": "잘못을 빌 때 하는 것, 혹은 빨간 과일" },
+      { "dir": "across", "row": 1, "col": 5, "answer": "과일",     "clue": "나무에 열리는 달콤한 먹거리를 통틀어 이르는 말" },
+      { "dir": "across", "row": 2, "col": 1, "answer": "비행기",   "clue": "하늘을 나는 교통수단" },
+      { "dir": "down",   "row": 2, "col": 1, "answer": "비누",     "clue": "손 씻을 때 거품을 내는 것" },
+      { "dir": "down",   "row": 4, "col": 0, "answer": "강아지",   "clue": "개의 새끼" },
+      { "dir": "across", "row": 4, "col": 2, "answer": "어린이",   "clue": "5월 5일은 이들의 날" },
+      { "dir": "down",   "row": 4, "col": 4, "answer": "이발소",   "clue": "남자들이 머리를 자르러 가는 곳" },
+      { "dir": "across", "row": 6, "col": 0, "answer": "지구",     "clue": "우리가 사는 행성" },
+      { "dir": "across", "row": 6, "col": 4, "answer": "소나기",   "clue": "여름철 갑자기 쏟아지다 그치는 비" }
     ]
   },
   "2026-07-10": {
-    "size": 5,
+    "size": 7,
     "words": [
-      { "dir": "across", "row": 0, "col": 0, "answer": "무지개",   "clue": "비 온 뒤 하늘에 뜨는 일곱 빛깔" },
-      { "dir": "down",   "row": 0, "col": 1, "answer": "지우개",   "clue": "연필 글씨를 지우는 도구" },
-      { "dir": "across", "row": 2, "col": 1, "answer": "개미",     "clue": "부지런함의 상징인 작은 곤충" },
-      { "dir": "down",   "row": 2, "col": 2, "answer": "미역",     "clue": "생일에 먹는 국에 들어가는 바닷말" },
-      { "dir": "across", "row": 3, "col": 2, "answer": "역사",     "clue": "지나온 시대의 기록" },
-      { "dir": "down",   "row": 3, "col": 3, "answer": "사자",     "clue": "동물의 왕이라 불리는 맹수" }
+      { "dir": "across", "row": 0, "col": 0, "answer": "도서관",   "clue": "책을 빌려 읽을 수 있는 곳" },
+      { "dir": "down",   "row": 0, "col": 0, "answer": "도로",     "clue": "차가 다니는 길" },
+      { "dir": "down",   "row": 0, "col": 2, "answer": "관광객",   "clue": "구경하러 온 손님" },
+      { "dir": "across", "row": 0, "col": 4, "answer": "나비",     "clue": "꽃밭을 팔랑팔랑 나는 곤충" },
+      { "dir": "down",   "row": 0, "col": 5, "answer": "비행사",   "clue": "비행기를 조종하는 사람" },
+      { "dir": "across", "row": 2, "col": 1, "answer": "관객",     "clue": "공연을 보러 온 사람들" },
+      { "dir": "down",   "row": 2, "col": 1, "answer": "관악기",   "clue": "입으로 불어 소리 내는 악기" },
+      { "dir": "across", "row": 2, "col": 5, "answer": "사탕",     "clue": "입에서 녹여 먹는 달콤한 것" },
+      { "dir": "down",   "row": 2, "col": 6, "answer": "탕수육",   "clue": "튀긴 고기에 새콤달콤한 소스를 부은 중국요리" },
+      { "dir": "across", "row": 4, "col": 1, "answer": "기술자",   "clue": "전문 기술을 가진 사람" },
+      { "dir": "down",   "row": 4, "col": 3, "answer": "자전거",   "clue": "두 바퀴를 페달로 굴려 가는 탈것" },
+      { "dir": "across", "row": 4, "col": 5, "answer": "교육",     "clue": "지식을 가르치고 배우는 일" },
+      { "dir": "across", "row": 6, "col": 3, "answer": "거미",     "clue": "줄을 쳐서 벌레를 잡는 절지동물" }
     ]
   }
 }
