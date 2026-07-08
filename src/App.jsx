@@ -6,11 +6,37 @@ function fmt(d) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 }
 
+// 제호에 쓰는 신문식 날짜: 2026년 7월 9일 (목)
+function kdate(key) {
+  const [y, m, d] = key.split('-').map(Number)
+  return `${y}년 ${m}월 ${d}일 (${'일월화수목금토'[new Date(y, m - 1, d).getDay()]})`
+}
+
+// ponytail: 풀이 시간은 벽시계 기준(자리 비운 시간 포함), 하루 넘으면 일 단위로 뭉뚱그림
+function fmtTime(s) {
+  if (s >= 86400) return `${Math.floor(s / 86400)}일`
+  if (s >= 3600) return `${Math.floor(s / 3600)}시간 ${Math.floor((s % 3600) / 60)}분`
+  if (s >= 60) return `${Math.floor(s / 60)}분 ${s % 60}초`
+  return `${s}초`
+}
+
 const today = fmt(new Date())
 const allDates = Object.keys(puzzles).sort()
 // ponytail: 오늘 퍼즐이 없으면 가장 최근 과거 퍼즐로 폴백
-const dateKey = puzzles[today] ? today : (allDates.filter((k) => k <= today).pop() ?? allDates[0])
+const latestKey = puzzles[today] ? today : (allDates.filter((k) => k <= today).pop() ?? allDates[0])
+// 지난 퍼즐 아카이브: URL 해시(#YYYY-MM-DD)로 선택. 미래 날짜는 차단
+const hashDate = decodeURIComponent(location.hash.slice(1))
+const dateKey = puzzles[hashDate] && hashDate <= latestKey ? hashDate : latestKey
 const puzzle = puzzles[dateKey]
+const playable = allDates.filter((k) => k <= latestKey)
+// ponytail: 상태가 전부 모듈 레벨 상수라 날짜 이동은 그냥 새로고침
+const goDate = (delta) => {
+  const d = playable[playable.indexOf(dateKey) + delta]
+  if (d) {
+    location.hash = d
+    location.reload()
+  }
+}
 
 // 단어 목록에서 격자 유도. 교차점 글자가 어긋나면 콘솔 경고 (퍼즐 제작 실수 방지)
 function buildGrid(p) {
@@ -59,7 +85,10 @@ export default function App() {
   const saved = useMemo(() => JSON.parse(localStorage.getItem(storeKey) || 'null'), [])
   const [entries, setEntries] = useState(saved?.entries ?? {})
   const [attempts, setAttempts] = useState(saved?.attempts ?? 0)
+  const [hints, setHints] = useState(saved?.hints ?? 0)
   const [done, setDone] = useState(saved?.done ?? false)
+  const [startTs, setStartTs] = useState(saved?.start ?? null) // 첫 입력 시각
+  const [elapsed, setElapsed] = useState(saved?.time ?? null) // 완성까지 걸린 초
   const [result, setResult] = useState(null) // 확인 후 key -> 정답 여부
   const [activeWi, setActiveWi] = useState(0)
   const [copied, setCopied] = useState(false)
@@ -78,12 +107,13 @@ export default function App() {
   }, [theme])
 
   useEffect(() => {
-    localStorage.setItem(storeKey, JSON.stringify({ entries, attempts, done }))
-  }, [entries, attempts, done])
+    localStorage.setItem(storeKey, JSON.stringify({ entries, attempts, hints, done, start: startTs, time: elapsed }))
+  }, [entries, attempts, hints, done, startTs, elapsed])
 
   const activeKeys = new Set(wordCells(puzzle.words[activeWi]))
 
   const setCell = (key, ch) => {
+    if (!startTs) setStartTs(Date.now())
     setEntries((e) => ({ ...e, [key]: ch }))
     setResult(null)
   }
@@ -164,17 +194,36 @@ export default function App() {
     setAttempts((a) => a + 1)
     if (all && !done) {
       setDone(true)
+      if (startTs) setElapsed(Math.round((Date.now() - startTs) / 1000))
+      // 지난 퍼즐(아카이브)은 연속 기록에 반영하지 않음
+      if (dateKey !== latestKey) return
       const s = JSON.parse(localStorage.getItem('crossword-streak') || 'null')
-      const [y, m, d] = dateKey.split('-').map(Number)
-      const prevDay = fmt(new Date(y, m - 1, d - 1))
+      // 달력상 전날이 아니라 "직전 퍼즐 날짜" 기준 (퍼즐이 빠진 날에 끊기지 않게)
+      const prevDay = allDates[allDates.indexOf(dateKey) - 1]
       const count = s?.last === dateKey ? s.count : s?.last === prevDay ? s.count + 1 : 1
       localStorage.setItem('crossword-streak', JSON.stringify({ last: dateKey, count }))
       setStreak(count)
     }
   }
 
+  // 힌트: 진행 중인 단어에서 틀리거나 빈 첫 칸을 공개, 없으면 격자 전체에서
+  const hint = () => {
+    const key = [...wordCells(puzzle.words[activeWi]), ...cells.keys()].find(
+      (k) => (entries[k] ?? '') !== cells.get(k).answer,
+    )
+    if (!key) return
+    const ch = cells.get(key).answer
+    if (inputs.current[key]) inputs.current[key].value = ch // uncontrolled input이라 DOM도 직접 갱신
+    setCell(key, ch)
+    setHints((h) => h + 1)
+  }
+
   const share = async () => {
-    const text = `🧩 매일 낱말퀴즈 ${dateKey}\n✅ 확인 ${attempts}번 만에 완성!\n🔥 연속 ${streak}일째\n${location.href}`
+    const lines = [`🧩 매일 낱말퀴즈 ${dateKey}`, `✅ 확인 ${attempts}번 만에 완성!`]
+    if (elapsed != null) lines.push(`⏱ ${fmtTime(elapsed)} 걸렸어요`)
+    if (hints) lines.push(`💡 힌트 ${hints}개 사용`)
+    if (dateKey === latestKey) lines.push(`🔥 연속 ${streak}일째`)
+    const text = [...lines, location.href].join('\n')
     await navigator.clipboard.writeText(text)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
@@ -182,7 +231,10 @@ export default function App() {
 
   const clueList = (dir, title) => (
     <div className="clues">
-      <h2>{title}</h2>
+      <h2>
+        <span className="bullet" />
+        {title}
+      </h2>
       <ol>
         {puzzle.words.map((w, wi) =>
           w.dir === dir ? (
@@ -191,7 +243,8 @@ export default function App() {
               className={wi === activeWi ? 'active' : ''}
               onClick={() => {
                 setActiveWi(wi)
-                focusCell(`${w.row},${w.col}`)
+                // 첫 빈 칸으로, 다 채웠으면 단어 시작 칸으로
+                focusCell(wordCells(w).find((k) => !entries[k]) ?? `${w.row},${w.col}`)
               }}
             >
               <b>{wordNums[wi]}.</b> {w.clue} ({w.answer.length}글자)
@@ -205,17 +258,35 @@ export default function App() {
   return (
     <div className="app">
       <header>
-        <button
-          className="theme-btn"
-          onClick={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
-          aria-label="다크모드 전환"
-        >
-          {theme === 'dark' ? '☀️' : '🌙'}
-        </button>
-        <h1>매일 낱말퀴즈</h1>
-        <p className="date">
-          {dateKey}
-          {dateKey !== today && ' (오늘의 퍼즐이 아직 없어 최근 퍼즐을 보여드려요)'}
+        <div className="mast-top">
+          <span>제 {playable.indexOf(dateKey) + 1} 호</span>
+          <span>
+            <button className="nav-btn" onClick={() => goDate(-1)} disabled={playable.indexOf(dateKey) === 0} aria-label="이전 퍼즐">
+              ◀
+            </button>
+            {kdate(dateKey)}
+            <button className="nav-btn" onClick={() => goDate(1)} disabled={dateKey === latestKey} aria-label="다음 퍼즐">
+              ▶
+            </button>
+          </span>
+          <span>
+            값 없음 · 자유 배포
+            <button
+              className="theme-btn"
+              onClick={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
+              aria-label="다크모드 전환"
+            >
+              {theme === 'dark' ? '☀️' : '🌙'}
+            </button>
+          </span>
+        </div>
+        <h1>가로세로 낱말풀이</h1>
+        <p className="sub">
+          {dateKey !== latestKey
+            ? '지난 호 다시 풀기'
+            : dateKey !== today
+              ? '오늘의 퍼즐이 아직 없어 최근 호를 보여드려요'
+              : '매일 아침, 우리말 한 판'}
         </p>
       </header>
 
@@ -250,12 +321,19 @@ export default function App() {
             </div>
           )
         })}
+        {done && (
+          <div className="stamp" aria-hidden="true">
+            <span>완성</span>
+          </div>
+        )}
       </div>
 
       {done ? (
         <div className="panel">
           <p>
-            🎉 완성! 확인 {attempts}번 · 🔥 연속 {streak}일째
+            🎉 완성! 확인 {attempts}번{elapsed != null && ` · ⏱ ${fmtTime(elapsed)}`}
+            {hints > 0 && ` · 💡 힌트 ${hints}개`}
+            {dateKey === latestKey && ` · 🔥 연속 ${streak}일째`}
           </p>
           <button onClick={share}>{copied ? '복사됨!' : '결과 복사하기'}</button>
           <p className="hint">내일 자정에 새 퍼즐이 열려요.</p>
@@ -263,9 +341,16 @@ export default function App() {
       ) : (
         <div className="panel">
           <button onClick={check}>정답 확인</button>
+          <button className="ghost" onClick={hint}>
+            💡 힌트{hints > 0 && ` (${hints})`}
+          </button>
+          <button className="ghost" onClick={() => window.print()}>
+            🖨 인쇄
+          </button>
           {result && <p className="hint">빨간 칸이 틀린 곳이에요. ({attempts}번 확인)</p>}
         </div>
       )}
+      <p className="help">칸을 클릭해 입력 · Tab 다음 열쇠 · ←↑↓→ 이동 · Enter 다음 칸</p>
         </div>
 
         <aside className="clue-cols">

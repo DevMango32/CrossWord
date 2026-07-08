@@ -1,43 +1,75 @@
+/* 종이 신문(브로드시트) 팔레트 — claude.ai/design '가로세로 낱말퀴즈' 시안 */
 :root {
-  font-family: system-ui, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  font-family: 'Nanum Myeongjo', 'Apple SD Gothic Neo', 'Malgun Gothic', serif;
   line-height: 1.5;
   color-scheme: light;
 
-  --bg: #f7f7f5;
-  --fg: #222;
-  --muted: #777;
-  --cell: #fff;
-  --block: #333;
-  --hl: #fff3bf;
-  --bad: #ffe3e3;
-  --ok: #2b8a3e;
-  --accent: #364fc7;
-  --accent-hover: #2c3fa3;
-  --hover: #f1f3f5;
-  --focus: #4dabf7;
+  --bg: #cdbf9f;
+  --bg-dot: rgba(120, 100, 70, 0.1);
+  --paper: #fbf7ec;
+  --fg: #1b1613;
+  --line: #241d17;
+  --muted: #6f6353;
+  --cell: #fbf7ec;
+  --block: #b3a892;
+  --hl: rgba(138, 28, 28, 0.13);
+  --hl-strong: rgba(138, 28, 28, 0.3);
+  --bad: rgba(170, 17, 17, 0.13);
+  --bad-fg: #a11;
+  --ok: #2f6b3f;
+  --accent: #8a1c1c;
+  --accent-hover: #6f1414;
+  --hover: rgba(138, 28, 28, 0.07);
 }
 
-/* 테마는 JS가 data-theme로 지정 (초기값: 저장된 선택 > 시스템 설정) */
+/* 테마는 JS가 data-theme로 지정 (초기값: 저장된 선택 > 시스템 설정) — 밤 인쇄판 */
 :root[data-theme='dark'] {
   color-scheme: dark;
 
-  --bg: #1a1b1e;
-  --fg: #e9ecef;
-  --muted: #909296;
-  --cell: #2c2e33;
-  --block: #0b0c0e;
-  --hl: #5c4d1a;
-  --bad: #5c2626;
-  --ok: #69db7c;
-  --accent: #4c6ef5;
-  --accent-hover: #5f7cf8;
-  --hover: #2c2e33;
-  --focus: #74c0fc;
+  --bg: #14100c;
+  --bg-dot: rgba(255, 240, 200, 0.05);
+  --paper: #211b14;
+  --fg: #e6dcc4;
+  --line: #6b5b47;
+  --muted: #9a8a70;
+  --cell: #16110c;
+  --block: #43382b;
+  --hl: rgba(214, 96, 77, 0.18);
+  --hl-strong: rgba(214, 96, 77, 0.38);
+  --bad: rgba(214, 96, 77, 0.22);
+  --bad-fg: #e08060;
+  --ok: #8fbb7f;
+  --accent: #a03227;
+  --accent-hover: #b4402f;
+  --hover: rgba(214, 96, 77, 0.1);
 }
 
 body {
   margin: 0;
   min-width: 320px;
   background-color: var(--bg);
+  background-image: radial-gradient(var(--bg-dot) 1px, transparent 1px);
+  background-size: 5px 5px;
   color: var(--fg);
+}
+
+/* 인쇄는 다크모드여도 흑백 지면으로 */
+@media print {
+  :root,
+  :root[data-theme='dark'] {
+    --bg: #fff;
+    --paper: #fff;
+    --cell: #fff;
+    --fg: #000;
+    --line: #000;
+    --muted: #555;
+    --block: #c8c8c8;
+    --hl: transparent;
+    --hl-strong: transparent;
+    --accent: #000;
+  }
+
+  body {
+    background: #fff;
+  }
 }

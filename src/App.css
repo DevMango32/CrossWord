@@ -1,7 +1,11 @@
+/* 신문 지면 한 장 */
 .app {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 16px;
+  max-width: 1060px;
+  margin: 28px auto;
+  padding: 30px 38px 40px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  box-shadow: 4px 5px 0 rgba(0, 0, 0, 0.09);
 }
 
 /* 격자(좌) + 열쇠(우) 2단 배치, 좁은 화면에선 세로로 쌓임 */
@@ -13,58 +17,129 @@
 }
 
 @media (max-width: 820px) {
+  .app {
+    margin: 0;
+    padding: 18px 16px 28px;
+    border: 0;
+    box-shadow: none;
+  }
+
   .layout {
     grid-template-columns: 1fr;
   }
 }
 
+/* 제호(masthead) */
 header {
-  position: relative;
+  margin-bottom: 22px;
+}
+
+.mast-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  font-family: 'Nanum Gothic', sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--muted);
+  padding-bottom: 8px;
+}
+
+h1 {
+  font-family: 'Song Myung', serif;
+  font-weight: 400;
   text-align: center;
-  margin-bottom: 16px;
+  font-size: clamp(34px, 6vw, 52px);
+  color: var(--fg);
+  letter-spacing: -1px;
+  margin: 2px 0;
+  padding: 10px 0;
+  border-top: 4px double var(--line);
+  border-bottom: 4px double var(--line);
+}
+
+.sub {
+  text-align: center;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--muted);
+  letter-spacing: 1px;
+  margin: 10px 0 0;
 }
 
 .theme-btn {
-  position: absolute;
-  top: 0;
-  right: 0;
-  font-size: 1.2rem;
+  font-size: 1rem;
+  line-height: 1;
   background: none;
-  border: 1px solid var(--muted);
-  border-radius: 8px;
-  padding: 4px 8px;
+  border: 1.5px solid var(--line);
+  border-radius: 2px;
+  padding: 3px 6px;
   cursor: pointer;
+  margin-left: 8px;
 }
 
 .theme-btn:hover {
   background: var(--hover);
 }
 
-h1 {
-  font-size: 1.6rem;
-  margin: 0;
-}
-
-.date {
+.nav-btn {
+  background: none;
+  border: 0;
   color: var(--muted);
-  font-size: 0.9rem;
-  margin: 4px 0 0;
+  cursor: pointer;
+  font-size: 0.7rem;
+  padding: 0 8px;
 }
 
+.nav-btn:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+/* 격자 */
 .board {
+  position: relative;
   display: grid;
-  gap: 3px;
-  background: var(--block);
-  border: 3px solid var(--block);
+  border: 2px solid var(--line);
+  background: var(--cell);
+  max-width: 560px;
+}
+
+/* 완성 도장 */
+.stamp {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.stamp span {
+  font-family: 'Song Myung', serif;
+  font-size: clamp(40px, 9vw, 72px);
+  color: var(--accent);
+  border: 5px double var(--accent);
   border-radius: 6px;
-  max-width: 640px;
-  margin: 0 auto;
+  padding: 6px 30px;
+  transform: rotate(-12deg);
+  opacity: 0.85;
+  animation: stamp 0.35s ease-out;
+}
+
+@keyframes stamp {
+  from {
+    transform: rotate(-12deg) scale(2.4);
+    opacity: 0;
+  }
 }
 
 .cell {
   position: relative;
   aspect-ratio: 1;
   background: var(--cell);
+  border: 1px solid var(--line);
 }
 
 .cell.black {
@@ -75,20 +150,41 @@ h1 {
   background: var(--hl);
 }
 
+/* 활성 칸은 진한 색조로 표시 (디자인 시안의 tintStrong) */
+.cell:focus-within {
+  background: var(--hl-strong);
+}
+
 .cell.ok input {
   color: var(--ok);
 }
 
 .cell.bad {
   background: var(--bad);
+  animation: shake 0.25s;
+}
+
+@keyframes shake {
+  25% {
+    translate: -3px 0;
+  }
+  75% {
+    translate: 3px 0;
+  }
+}
+
+.cell.bad input {
+  color: var(--bad-fg);
 }
 
 .cell .num {
   position: absolute;
   top: 2px;
-  left: 4px;
-  font-size: 0.65rem;
-  color: var(--muted);
+  left: 3px;
+  font-family: 'Nanum Gothic', sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  color: var(--fg);
   pointer-events: none;
 }
 
@@ -98,28 +194,35 @@ h1 {
   border: 0;
   background: transparent;
   text-align: center;
-  font-size: clamp(0.9rem, 4vw, 1.8rem);
-  font-weight: 700;
+  font-family: 'Song Myung', serif;
+  font-size: clamp(1rem, 4vw, 1.6rem);
   color: var(--fg);
+  caret-color: var(--accent);
   padding: 0;
+  outline: none;
 }
 
-.cell input:focus {
-  outline: 3px solid var(--focus);
-  outline-offset: -3px;
-}
-
+/* 버튼 줄 */
 .panel {
-  text-align: center;
-  margin: 16px 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 0;
+}
+
+.panel p {
+  margin: 0;
 }
 
 .panel button {
-  font-size: 1rem;
-  font-weight: 700;
-  padding: 10px 24px;
+  font-family: 'Nanum Gothic', sans-serif;
+  font-weight: 800;
+  font-size: 13.5px;
+  letter-spacing: 0.5px;
+  padding: 9px 16px;
   border: 0;
-  border-radius: 8px;
+  border-radius: 2px;
   background: var(--accent);
   color: #fff;
   cursor: pointer;
@@ -129,35 +232,78 @@ h1 {
   background: var(--accent-hover);
 }
 
-.hint {
-  color: var(--muted);
-  font-size: 0.9rem;
-  margin: 8px 0 0;
+.panel button.ghost {
+  background: transparent;
+  color: var(--fg);
+  border: 1.5px solid var(--line);
+  font-weight: 700;
+  padding: 8px 14px;
 }
 
+.panel button.ghost:hover {
+  background: var(--hover);
+}
+
+.hint,
+.help {
+  font-family: 'Nanum Gothic', sans-serif;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 10px 0 0;
+}
+
+/* 열쇠 목록 */
 .clue-cols {
   display: grid;
-  gap: 8px;
+  gap: 18px;
+  border-left: 1px solid var(--line);
+  padding-left: 26px;
+}
+
+@media (max-width: 820px) {
+  .clue-cols {
+    border-left: 0;
+    padding-left: 0;
+    border-top: 1px solid var(--line);
+    padding-top: 18px;
+  }
 }
 
 .clues h2 {
-  font-size: 1rem;
-  border-bottom: 2px solid var(--fg);
-  padding-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'Song Myung', serif;
+  font-weight: 400;
+  font-size: 18px;
+  color: var(--fg);
+  border-bottom: 2px solid var(--line);
+  padding-bottom: 5px;
+  margin: 0 0 8px;
+}
+
+.bullet {
+  width: 11px;
+  height: 11px;
+  background: var(--accent);
+  display: inline-block;
 }
 
 .clues ol {
   list-style: none;
   padding: 0;
-  margin: 8px 0;
+  margin: 0;
 }
 
 .clues li {
-  padding: 6px 8px;
-  border-radius: 6px;
+  padding: 5px 9px;
+  margin: 1px 0;
+  font-size: 14.5px;
+  line-height: 1.45;
   cursor: pointer;
-  font-size: 0.92rem;
-  line-height: 1.4;
+  border-left: 3px solid transparent;
+  border-radius: 1px;
 }
 
 .clues li:hover {
@@ -166,4 +312,31 @@ h1 {
 
 .clues li.active {
   background: var(--hl);
+  border-left-color: var(--accent);
+}
+
+.clues li b {
+  font-family: 'Nanum Gothic', sans-serif;
+  font-weight: 800;
+  color: var(--accent);
+  margin-right: 4px;
+}
+
+/* 종이에 뽑아 풀 수 있게: 조작 UI는 숨기고 지면만 인쇄 */
+@media print {
+  .app {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .theme-btn,
+  .nav-btn,
+  .panel,
+  .help,
+  .stamp {
+    display: none;
+  }
 }

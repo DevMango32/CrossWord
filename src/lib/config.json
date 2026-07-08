@@ -1,9 +1,0 @@
-{
-  "DAILY_TARGET_MIN": 15,
-  "DAILY_TARGET_MAX": 20,
-  "CHAIN_MIN": 2,
-  "CHAIN_MAX": 6,
-  "TIME_LIMIT_SECONDS": 5,
-  "API_THROTTLE_MS": 350,
-  "SEED_SYLLABLE_STRATEGY": ["start-with-syllable", "include-syllable"]
-}
