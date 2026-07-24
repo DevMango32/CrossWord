@@ -1,47 +1,49 @@
 /* 종이 신문(브로드시트) 팔레트 — claude.ai/design '가로세로 낱말퀴즈' 시안 */
 :root {
-  font-family: 'Nanum Myeongjo', 'Apple SD Gothic Neo', 'Malgun Gothic', serif;
+  font-family: 'Noto Serif KR', 'Apple SD Gothic Neo', 'Malgun Gothic', serif;
   line-height: 1.5;
   color-scheme: light;
 
-  --bg: #cdbf9f;
-  --bg-dot: rgba(120, 100, 70, 0.1);
-  --paper: #fbf7ec;
-  --fg: #1b1613;
-  --line: #241d17;
-  --muted: #6f6353;
-  --cell: #fbf7ec;
-  --block: #b3a892;
-  --hl: rgba(138, 28, 28, 0.13);
-  --hl-strong: rgba(138, 28, 28, 0.3);
-  --bad: rgba(170, 17, 17, 0.13);
-  --bad-fg: #a11;
-  --ok: #2f6b3f;
-  --accent: #8a1c1c;
-  --accent-hover: #6f1414;
-  --hover: rgba(138, 28, 28, 0.07);
+  --bg: #d5d5d2;
+  --bg-dot: rgba(0, 0, 0, 0.05);
+  --paper: #f4f4f1;
+  --fg: #1a1a1a;
+  --line: #232323;
+  --muted: #6b6b68;
+  --cell: #f4f4f1;
+  --block: #b6b6b2;
+  --hl: rgba(70, 100, 125, 0.1);
+  --hl-strong: rgba(70, 100, 125, 0.22);
+  --bad: rgba(190, 90, 70, 0.14);
+  --bad-fg: #1a1a1a;
+  --ok: #3a7a4e;
+  --ok-bg: #d7ead2;
+  --accent: #40607a;
+  --accent-hover: #334d61;
+  --hover: rgba(70, 100, 125, 0.07);
 }
 
 /* 테마는 JS가 data-theme로 지정 (초기값: 저장된 선택 > 시스템 설정) — 밤 인쇄판 */
 :root[data-theme='dark'] {
   color-scheme: dark;
 
-  --bg: #14100c;
-  --bg-dot: rgba(255, 240, 200, 0.05);
-  --paper: #211b14;
-  --fg: #e6dcc4;
-  --line: #6b5b47;
-  --muted: #9a8a70;
-  --cell: #16110c;
-  --block: #43382b;
-  --hl: rgba(214, 96, 77, 0.18);
-  --hl-strong: rgba(214, 96, 77, 0.38);
-  --bad: rgba(214, 96, 77, 0.22);
-  --bad-fg: #e08060;
-  --ok: #8fbb7f;
-  --accent: #a03227;
-  --accent-hover: #b4402f;
-  --hover: rgba(214, 96, 77, 0.1);
+  --bg: #1a1a1a;
+  --bg-dot: rgba(255, 255, 255, 0.04);
+  --paper: #262626;
+  --fg: #e4e4e1;
+  --line: #4d4d4d;
+  --muted: #9a9a97;
+  --cell: #222222;
+  --block: #3a3a3a;
+  --hl: rgba(120, 160, 190, 0.16);
+  --hl-strong: rgba(120, 160, 190, 0.32);
+  --bad: rgba(125, 33, 38, 0.6);
+  --bad-fg: #ffffff;
+  --ok: #7bb082;
+  --ok-bg: rgba(38, 92, 50, 0.55);
+  --accent: #557691;
+  --accent-hover: #66889f;
+  --hover: rgba(120, 160, 190, 0.1);
 }
 
 body {
@@ -66,6 +68,7 @@ body {
     --block: #c8c8c8;
     --hl: transparent;
     --hl-strong: transparent;
+    --ok-bg: transparent;
     --accent: #000;
   }
 
